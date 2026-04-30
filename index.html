@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Pro - Conéctate Ya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- MODO OSCURO --- */
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #121212; color: #e0e0e0; }
+            .plan, .cobertura, .lista-modulos, .beneficios, .modal-content, .seccion-ubicaciones { 
+                background-color: #1e1e1e !important; color: white !important; 
+            }
+            .plan h2, .modulo-item h5, .plan h3 { color: #00aaff !important; }
+            .plan p, .modulo-item p, .beneficio-item p { color: #bbb !important; }
+            .mapa-artificial { background-color: #0d47a1 !important; border-color: #333 !important; }
+            .calle-v, .calle-h { background: #1a237e !important; opacity: 0.4; }
+            .cobertura input, .modal-content input { background: #333; color: white; border: 1px solid #444; }
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f4f4; margin: 0; }
+        header { background: linear-gradient(135deg, #0056b3, #00aaff); color: white; padding: 50px 20px; text-align: center; }
+        .cobertura { background: white; padding: 30px; text-align: center; border-bottom: 2px solid #ddd; }
+        
+        .contenedor-seccion {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; padding: 40px 20px; max-width: 1200px; margin: 0 auto;
+        }
+
+        .beneficios { background: #f9f9f9; display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; padding: 40px; text-align: center; }
+        .beneficio-item { width: 200px; }
+        .beneficio-item i { font-size: 35px; color: #28a745; margin-bottom: 10px; }
+
+        .plan { 
+            background: white; border-radius: 15px; padding: 25px; width: 230px; 
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 6px solid #0056b3; transition: 0.3s; 
+        }
+        .plan:hover { transform: translateY(-10px); }
+        .plan i { font-size: 45px; color: #0056b3; margin-bottom: 15px; }
+
+        .btn-contratar { 
+            background: #28a745; color: white; padding: 12px 25px; border-radius: 5px; 
+            font-weight: bold; cursor: pointer; border: none; text-decoration: none; display: inline-block;
+        }
+
+        .seccion-ubicaciones { padding: 50px 20px; text-align: center; }
+        .mapa-artificial { 
+            width: 100%; max-width: 450px; height: 280px; background: #e3f2fd; border-radius: 15px; 
+            position: relative; margin: 20px auto; overflow: hidden; border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .calle-v { position: absolute; background: white; width: 12px; height: 100%; left: 40%; }
+        .calle-h { position: absolute; background: white; height: 12px; width: 100%; top: 45%; }
+        .pin { position: absolute; color: #d9534f; font-size: 28px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.3);} 100% {transform: scale(1);} }
+
+        .lista-modulos { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 5px solid #0056b3; width: 100%; max-width: 320px; margin: 20px auto; }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; width: 85%; max-width: 350px; border-radius: 15px; text-align: center; position: relative; }
+        .cerrar { position: absolute; right: 15px; top: 10px; font-size: 28px; cursor: pointer; }
+
+        .btn-whatsapp { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; text-align: center; line-height: 60px; font-size: 32px; z-index: 2000; text-decoration: none; }
+        footer { background: #222; color: #888; padding: 30px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fas fa-wifi"></i> Conexión Internet Pro</h1>
+    <p>Velocidad real para lo que más te importa.</p>
+</header>
+
+<section class="cobertura">
+    <h3>¿Llegamos a tu colonia?</h3>
+    <input type="text" placeholder="Escribe tu C.P." style="padding:10px; border-radius:5px; border:1px solid #ccc;">
+    <button class="btn-contratar" style="background:#0056b3">Verificar</button>
+</section>
+
+<section class="beneficios">
+    <div class="beneficio-item"><i class="fas fa-bolt"></i><h4>Fibra Óptica</h4><p>Navega sin caídas.</p></div>
+    <div class="beneficio-item"><i class="fas fa-user-shield"></i><h4>Sin Plazos</h4><p>Tú tienes el control.</p></div>
+    <div class="beneficio-item"><i class="fas fa-headset"></i><h4>Soporte</h4><p>Atención 24/7.</p></div>
+</section>
+
+<div class="contenedor-seccion">
+    <!-- Tus 4 paquetes intactos -->
+    <div class="plan">
+        <i class="fas fa-mobile-alt"></i><h3>Básico</h3><h2>20 Mb</h2><p>Ideal para 1-2 personas.</p>
+        <button class="btn-contratar" onclick="abrirModal('Plan Básico 20Mb')">Me interesa</button>
+    </div>
+    <div class="plan">
+        <i class="fas fa-home"></i><h3>Hogar</h3><h2>50 Mb</h2><p>Streaming y redes sociales.</p>
+        <button class="btn-contratar" onclick="abrirModal('Plan Hogar 50Mb')">Me interesa</button>
+    </div>
+    <div class="plan">
+        <i class="fas fa-gamepad"></i><h3>Gamer</h3><h2>200 Mb</h2><p>Para juegos y descargas.</p>
+        <button class="btn-contratar" onclick="abrirModal('Plan Gamer 200Mb')">Me interesa</button>
+    </div>
+    <div class="plan">
+        <i class="fas fa-rocket"></i><h3>Pro</h3><h2>500 Mb</h2><p>Potencia pura para empresas.</p>
+        <button class="btn-contratar" onclick="abrirModal('Plan Pro 500Mb')">Me interesa</button>
+    </div>
+</div>
+
+<section class="seccion-ubicaciones">
+    <h3><i class="fas fa-map-marker-alt"></i> Ubica tu Módulo</h3>
+    <div class="contenedor-seccion">
+        <div class="mapa-artificial">
+            <div class="calle-v"></div><div class="calle-h"></div>
+            <i class="fas fa-map-marker-alt pin" style="top:40%; left:38%;"></i>
+            <i class="fas fa-map-marker-alt pin" style="top:60%; left:70%;"></i>
+        </div>
+        <div class="lista-modulos">
+            <p><strong><i class="fas fa-store"></i> Módulo Central:</strong> Av. Juárez #50</p>
+            <p><strong><i class="fas fa-store"></i> Módulo Norte:</strong> Plaza Las Torres</p>
+            <p><strong><i class="fas fa-store"></i> Punto Express:</strong> Estación Hidalgo</p>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL ACTUALIZADO -->
+<div id="miModal" class="modal">
+    <div class="modal-content">
+        <span class="cerrar" onclick="cerrarModal()">&times;</span>
+        <h3 id="tituloPlan">¡Excelente elección!</h3>
+        <p>Ingresa tus datos para empezar:</p>
+        <input type="text" id="nombreCliente" placeholder="Nombre completo" style="width:100%; padding:10px; margin:5px 0; box-sizing:border-box;">
+        <input type="tel" id="telCliente" placeholder="WhatsApp (10 dígitos)" style="width:100%; padding:10px; margin:5px 0; box-sizing:border-box;">
+        <!-- FRACE CLAVE EN EL BOTÓN -->
+        <button class="btn-contratar" style="width:100%; margin-top:10px;" onclick="enviarPedido()">
+            ¡Quiero contratar y navegar ya! 🚀
+        </button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Internet Pro | Proyecto de Portafolio</p>
+</footer>
+
+<a href="https://wa.me/5215643748587" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+    let planSeleccionado = "";
+
+    function abrirModal(nombrePlan) { 
+        planSeleccionado = nombrePlan;
+        document.getElementById("tituloPlan").innerText = "Contratar: " + nombrePlan;
+        document.getElementById("miModal").style.display = "block"; 
+    }
+
+    function cerrarModal() { document.getElementById("miModal").style.display = "none"; }
+
+    function enviarPedido() {
+        let nombre = document.getElementById("nombreCliente").value;
+        let tel = document.getElementById("telCliente").value;
+        
+        if(nombre == "" || tel == "") {
+            alert("Por favor llena tus datos para continuar.");
+            return;
+        }
+
+        // Crear el mensaje para WhatsApp
+        let mensaje = "¡Hola! Me interesa unirme como socio. Mi nombre es " + nombre + 
+                      ", mi teléfono es " + tel + " y quiero contratar el " + planSeleccionado + ".";
+        
+        // Abrir WhatsApp con el mensaje (Sustituye las X por tu número real)
+        window.open("https://wa.me/5215643748587?text=" + encodeURIComponent(mensaje));
+        cerrarModal();
+    }
+</script>
+
+</body>
+</html>
